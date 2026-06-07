@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Cyan to Blue Gradient -->
+    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    
+    <!-- Outer Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Futuristic hexagon container with a dark background -->
+  <polygon points="50,6 88,28 88,72 50,94 12,72 12,28" fill="#060b16" stroke="url(#neonGrad)" stroke-width="4.5" stroke-linejoin="round" filter="url(#glow)" />
+  
+  <!-- Holographic background dot grid pattern -->
+  <g opacity="0.15">
+    <circle cx="30" cy="30" r="1.5" fill="#06b6d4" />
+    <circle cx="40" cy="30" r="1.5" fill="#06b6d4" />
+    <circle cx="50" cy="30" r="1.5" fill="#06b6d4" />
+    <circle cx="60" cy="30" r="1.5" fill="#06b6d4" />
+    <circle cx="70" cy="30" r="1.5" fill="#06b6d4" />
+
+    <circle cx="30" cy="40" r="1.5" fill="#06b6d4" />
+    <circle cx="40" cy="40" r="1.5" fill="#06b6d4" />
+    <circle cx="50" cy="40" r="1.5" fill="#06b6d4" />
+    <circle cx="60" cy="40" r="1.5" fill="#06b6d4" />
+    <circle cx="70" cy="40" r="1.5" fill="#06b6d4" />
+
+    <circle cx="30" cy="50" r="1.5" fill="#06b6d4" />
+    <circle cx="40" cy="50" r="1.5" fill="#06b6d4" />
+    <circle cx="50" cy="50" r="1.5" fill="#06b6d4" />
+    <circle cx="60" cy="50" r="1.5" fill="#06b6d4" />
+    <circle cx="70" cy="50" r="1.5" fill="#06b6d4" />
+
+    <circle cx="30" cy="60" r="1.5" fill="#06b6d4" />
+    <circle cx="40" cy="60" r="1.5" fill="#06b6d4" />
+    <circle cx="50" cy="60" r="1.5" fill="#06b6d4" />
+    <circle cx="60" cy="60" r="1.5" fill="#06b6d4" />
+    <circle cx="70" cy="60" r="1.5" fill="#06b6d4" />
+
+    <circle cx="30" cy="70" r="1.5" fill="#06b6d4" />
+    <circle cx="40" cy="70" r="1.5" fill="#06b6d4" />
+    <circle cx="50" cy="70" r="1.5" fill="#06b6d4" />
+    <circle cx="60" cy="70" r="1.5" fill="#06b6d4" />
+    <circle cx="70" cy="70" r="1.5" fill="#06b6d4" />
+  </g>
+
+  <!-- Circuit track corner connectors -->
+  <line x1="12" y1="28" x2="25" y2="28" stroke="#06b6d4" stroke-width="2" opacity="0.6" />
+  <line x1="88" y1="28" x2="75" y2="28" stroke="#3b82f6" stroke-width="2" opacity="0.6" />
+  <line x1="12" y1="72" x2="25" y2="72" stroke="#3b82f6" stroke-width="2" opacity="0.6" />
+  <line x1="88" y1="72" x2="75" y2="72" stroke="#06b6d4" stroke-width="2" opacity="0.6" />
+
+  <!-- Stylized Cyberpunk Initials "AT" -->
+  <g fill="none" stroke="url(#neonGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+    <!-- Letter A -->
+    <path d="M 23 70 L 37 30 L 51 70" />
+    <path d="M 28 56 L 46 56" />
+
+    <!-- Letter T -->
+    <path d="M 50 30 L 76 30" />
+    <path d="M 63 30 L 63 70" />
+  </g>
+
+  <!-- High-tech circuit nodes/points at tips of the letters -->
+  <!-- A's top peak node -->
+  <circle cx="37" cy="30" r="3" fill="#ffffff" stroke="#06b6d4" stroke-width="1.5" />
+  <!-- A's bottom left and right nodes -->
+  <circle cx="23" cy="70" r="2.5" fill="#06b6d4" />
+  <circle cx="51" cy="70" r="2.5" fill="#06b6d4" />
+  <!-- T's left and right horizontal tip nodes -->
+  <circle cx="50" cy="30" r="2.5" fill="#3b82f6" />
+  <circle cx="76" cy="30" r="2.5" fill="#06b6d4" />
+  <!-- T's bottom vertical tip node -->
+  <circle cx="63" cy="70" r="3" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5" />
+
+</svg>

@@ -1,0 +1,241 @@
+PLUG 	AND 	DEFEND
+USER 	MANUAL
+
+-- 1 of 18 --
+
+REGISTRATION
+1. 	Open 	http://pndpi.local:5000/login
+2. 	Click 	Register 	New 	Account
+3. 	Fill 	all 	necessary 	fields 	with 	your 	information
+4. 	Then 	click 	Submit
+5. 	OTP 	will 	then 	be 	sent 	to 	your 	email 	for 	confirmation
+
+-- 2 of 18 --
+
+LOGIN
+1. 	Your 	newly 	created 	accounts 	still 	need 	to 	get 	approved 	by
+an 	Administrator
+2. 	Once 	approved, 	you 	can 	login 	through
+http://pndpi.local:5000/login
+3. 	Enter 	your 	username 	and 	password, 	then 	click 	Login
+
+-- 3 of 18 --
+
+DASHBOARD
+ 	This 	is 	the 	Dashboard, 	it 	contains 	functionalities 	and
+information 	for 	quick 	access 	and 	retrieval
+ 	This 	is 	the 	Quick 	Network 	scanner 	section, 	to 	use, 	please
+click 	the 	button 	according 	to 	its 	order:
+ 	This 	is 	the 	Recent 	Scan 	section 	where 	you 	can 	see 	all 	scan
+instances
+
+-- 4 of 18 --
+
+ 	(1) 	is 	the 	Sidebar, 	and 	(2) 	is 	the 	top 	navbar, 	(3) 	is 	the 	profile, 	(4)
+is 	the 	notifications
+NETWORK 	SCANNING
+1. 	The 	quick 	network 	scan 	is 	located 	in 	the 	Dashboard.
+2. 	Click 	Detect 	Target, 	then 	click 	Start 	Scan
+3. 	While 	it 	scanning, 	wait 	for 	it 	to 	finish 	its 	Rubber 	Ducky 	payload,
+and 	after 	that 	wait 	for 	it 	to 	finish
+4. 	After 	the 	scan, 	your 	recent 	scan 	results 	will 	be 	listed 	on
+Recent 	Scans 	section:
+
+-- 5 of 18 --
+
+5. 	The 	Dedicated 	Network 	Scanner 	with 	real-time 	updates 	is
+located 	in 	http://pndpi.local:5000/scanner
+6. 	Perform 	the 	same 	step 	just 	like 	in 	the 	Quick 	Network 	Scanner
+ 	Current 	scan 	phases 	will 	be 	animated 	in 	this 	section:
+7. 	The 	scan 	instance 	will 	also 	be 	listed 	in 	the 	Recent 	Scans
+section 	after 	the 	scan 	finishes
+
+-- 6 of 18 --
+
+VIEWING 	THE 	ANALYSIS
+1. 	On 	either 	the 	Dashboard 	or 	Dedicated 	Network 	Scanner 	page,
+scroll 	to 	Recent 	Scans 	sections, 	you 	will 	see 	a 	list 	of 	all 	scan
+instances 	there, 	to 	view, 	click 	View
+2. 	It 	will 	redirect 	you 	the 	Scan 	Analysis 	Results 	Page 	to 	view 	the
+analysis 	on 	that 	specific 	Scan 	Instance
+3. 	From 	there 	you 	can 	look 	into 	the 	AI 	Threat 	Intelligence
+Summary, 	Detailed 	Forensics 	Findings, 	and 	even 	download 	the
+evidence 	files 	generated 	from 	the 	scan
+
+-- 7 of 18 --
+
+DOWNLOADING 	EVIDENCE 	FILES
+1. 	On 	the 	Scan 	Analysis 	Results 	page, 	go 	down 	to 	Evidence 	files
+section. 	From 	there, 	you 	can 	either 	download 	one 	file 	or
+download 	it 	all 	as 	a 	.zip 	file
+DASHBOARD 	STAT 	CARDS
+ 	(1) 	Is 	the 	Total 	Scans 	Overview
+ 	(2) 	is 	the 	Scan 	Activity 	Distribution
+ 	(3) 	is 	the 	Scans 	Over 	Time
+ 	(4) 	is 	the 	Risk 	Level 	Distribution
+
+-- 8 of 18 --
+
+ 	This 	is 	the 	User 	Activity 	card
+ 	This 	is 	the 	CPU 	usage 	and 	Memory 	Usage 	card
+USER 	MANAGEMENT 	(ADMIN 	ONLY)
+1. 	Open 	http://pndpi.local:5000/admin/users
+2. 	This 	is 	where 	you 	can 	manage 	user 	access, 	view 	all 	the 	users,
+approve 	a 	pending 	request, 	Accept/Reject 	user 	deletion
+request 	and 	Enable/Disable 	user 	access 	to 	the 	system
+
+-- 9 of 18 --
+
+MY 	SCANS 	PAGE
+1. 	Go 	to 	http://pndpi.local:5000/my-scans
+2. 	In 	this 	page 	you 	can 	see 	all 	your 	own 	initiated 	scans,
+organized, 	and 	can 	be 	filtered 	for 	faster 	referencing.
+3. 	This 	is 	also 	the 	page 	where 	you 	can 	continue 	the 	failed 	AI
+analysis 	of 	a 	scan 	due 	to 	being 	offline 	or 	poor 	internet
+connection.
+ALL 	SCANS 	PAGE 	(ADMIN 	ONLY)
+1. 	Go 	to 	http://pndpi.local:5000/all-scans
+2. 	This 	is 	where 	you 	can 	view 	all 	the 	scans 	initiated 	from
+different 	admin 	and 	analyst 	accounts
+
+-- 10 of 18 --
+
+AUDIT 	LOGS
+1. 	Go 	to 	http://pndpi.local:5000/audit-logs
+2. 	This 	is 	where 	you 	can 	see 	all 	the 	necessary 	log-worthy 	notice
+and 	activities 	from 	different 	users 	(this 	function 	is 	only
+available 	for 	admin 	and 	analyst 	user 	access 	level)
+3. 	This 	is 	also 	the 	page 	where 	you 	can 	export 	logs, 	and 	download
+you 	PUBLIC 	KEY 	for 	use 	in 	decrypting 	signed 	files 	using
+GPG4WIN 	(Kleopatra) 	– 	which 	is 	needed 	to 	be 	installed
+CHAIN 	OF 	CUSTODY
+1. 	Go 	to 	http://pndpi.local:5000/chain-of-custody
+2. 	This 	is 	where 	you 	can 	see 	all 	the 	chain 	of 	processes 	and
+checklists 	of 	each 	scan 	instance 	for 	detailed 	referencing 	and
+verification 	of 	custody 	of 	each 	scan 	instance
+
+-- 11 of 18 --
+
+3. 	You 	can 	view 	each 	evidence 	(scan 	instance 	here) 	and 	track
+what 	processes 	had 	happened 	or 	what 	else 	is 	needed 	to 	be
+done 	in 	order 	for 	the 	custody 	process 	to 	be 	completed 	(Click
+View 	Full 	Chain)
+4. 	Lastly 	you 	can 	also 	download 	the 	chain 	report 	here 	in 	.txt
+format
+GENERAL 	SETTINGS
+1. 	Visit 	http://pndpi.local:5000/general-settings
+2. 	This 	is 	the 	page 	where 	you 	can 	view 	System 	Information 	and
+System 	Controls 	like 	shutting 	down 	the 	device, 	reboot, 	restart
+web 	server, 	and 	quick 	actions.
+
+-- 12 of 18 --
+
+ACCOUNT 	SETTINGS
+1. 	Go 	to 	http://pndpi.local:5000/settings
+2. 	This 	is 	where 	you 	can 	do 	an 	update 	on 	your 	profile
+information, 	Change 	Password, 	set 	Notification 	Preferences,
+and 	request 	account 	deletion.
+PERSONALIZATION
+1. 	Go 	to 	http://pndpi.local:5000/settings/personalization
+2. 	This 	is 	where 	you 	can 	change 	the 	appearance 	of 	the 	system
+from 	your 	account’s 	perspective, 	you 	can 	set 	new
+modification 	and 	can 	revert 	to 	default.
+
+-- 13 of 18 --
+
+CONNECTIVITY
+1. 	Go 	to 	http://pndpi.local:5000/connectivity
+2. 	This 	is 	where 	you 	can 	add 	an 	SSID, 	connect 	to 	a 	network,
+modify 	WIFI 	credentials 	and 	set 	priorities 	on 	which
+access 	point 	should 	the 	device 	try 	to 	connect 	first.
+3. 	This 	is 	essential 	as 	this 	is 	the 	way 	the 	device 	can
+connect 	to 	the 	internet, 	hence 	connecting 	to 	the 	AI 	API.
+PROFILE 	ICON
+1. 	You 	can 	click 	this 	part:
+
+-- 14 of 18 --
+
+2. 	This 	is 	where 	you 	can 	see 	quick 	links 	on 	other 	pages
+like 	My 	profile, 	Accounts 	Settings, 	etc.
+NOTIFICATION
+1. 	Click 	this:
+2. 	This 	will 	show 	you 	necessary 	notification
+information 	about 	an 	activity 	or 	system 	notice
+
+-- 15 of 18 --
+
+How 	to 	Download 	& 	Verify 	Evidence
+Download 	Process
+Step 	1: 	Click 	"Download 	All 	(Signed)" 	button
+This 	creates 	a 	ZIP 	bundle 	with 	all 	evidence 	files, 	GPG 	signatures, 	and 	verification 	instructions.
+Step 	2: 	Download 	the 	ZIP 	file
+You'll 	receive 	a 	file 	named 	scan_[ID]_evidence_signed_[TIMESTAMP].zip 	containing:
+ 	All 	evidence 	files 	(JSON, 	PCAP, 	logs, 	etc.)
+ 	GPG 	signature 	(.sig) 	for 	each 	file
+ 	README.txt 	- 	Complete 	verification 	instructions
+Step 	3: 	Extract 	the 	ZIP 	file
+Extract 	all 	files 	to 	a 	folder 	on 	your 	computer.
+Step 	4: 	Verify 	signatures
+Follow 	the 	instructions 	in 	README.txt 	to 	verify 	each 	file's 	authenticity 	using 	GPG.
+Verification 	of 	Evidence 	files 	using 	GPG4WIN 	(Kleopatra)
+Quick 	Verification 	(Windows):
+1. 	Install 	Gpg4win
+2. 	Download 	the 	PND 	public 	key 	from 	Audit 	Logs 	page
+3. 	Import 	key 	in 	Kleopatra 	(The 	public 	key 	in 	.asc 	file 	format)
+4. 	Verify 	each 	.sig 	file 	using 	the 	Public 	Key
+5. 	Take 	note 	that 	the 	file 	that 	needs 	to 	be 	verified 	is 	the 	sig 	files 	partnered 	with 	each
+files 	inside 	the 	folder 	of 	the 	extracted 	evidence 	.zip 	file
+(example: 	pcap.log 	= 	original 	file, 	pcap.log.sig 	= 	is 	what 	needs 	to 	be 	verified)
+It 	will 	then 	tell 	that 	the 	file 	is 	verified 	by 	“PNDSystem” 	meaning 	the 	original 	files
+hasn’t 	been 	modified, 	ensuring 	file 	integrity.
+Role 	Based 	Access 	Control
+
+-- 16 of 18 --
+
+1. 	Functionalities 	and 	visibility 	of 	each 	varies 	depending 	on 	whether 	your 	account 	is 	an
+Admin, 	analyst 	or 	auditor 	account 	access 	level 	tier:
+Analyst 	- 	Operational 	Forensic 	Role
+Permissions:
+ 	Run 	network 	scans 	and 	PCAP 	captures
+ 	View 	ONLY 	your 	own 	scan 	results
+ 	Generate 	forensic 	reports
+ 	Trigger 	AI 	analysis 	on 	scans
+ 	Submit 	evidence 	for 	review
+Restrictions:
+ 	Cannot 	view 	other 	analysts' 	scans
+ 	Cannot 	add/modify 	user 	accounts
+ 	Cannot 	delete 	evidence 	or 	change 	system 	settings
+ 	Cannot 	access 	other 	users' 	data
+Note: 	Ideal 	for 	cybersecurity 	analysts, 	threat 	hunters, 	and 	incident 	responders.
+Auditor 	- 	Oversight 	& 	Compliance 	Role
+Permissions:
+ 	Read-only 	access 	to 	ALL 	scans
+ 	Review 	complete 	audit 	logs
+ 	Verify 	chain-of-custody
+ 	Approve 	evidence 	exports
+ 	Monitor 	user 	activity
+Restrictions:
+ 	Cannot 	run 	scans 	or 	capture 	data
+ 	Cannot 	modify 	any 	data 	or 	settings
+ 	Cannot 	delete 	or 	alter 	evidence
+
+-- 17 of 18 --
+
+ 	Cannot 	change 	user 	permissions
+Note: 	For 	internal 	audit, 	legal 	compliance 	officers, 	and 	supervisory 	personnel.
+Administrator 	- 	Full 	System 	Access
+Permissions:
+ 	Manage 	users 	(create, 	disable, 	approve 	accounts)
+ 	Configure 	system 	settings 	and 	API 	keys
+ 	View 	ALL 	scans 	from 	all 	users
+ 	Delete 	scans 	and 	manage 	evidence
+ 	Access 	complete 	audit 	logs
+ 	Manage 	RBAC 	policies
+Restrictions:
+ 	Should 	NOT 	perform 	investigations 	(separation 	of 	duties)
+ 	Reserved 	for 	commanding 	officers 	and 	system 	owners
+Note: 	Admin 	access 	requires 	highest 	clearance 	and 	approval 	from 	commanding 	officer.
+End
+
+-- 18 of 18 --
+
