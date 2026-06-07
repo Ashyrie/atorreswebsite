@@ -244,7 +244,7 @@ export default function FlagCityProperties({ onClose }: FlagCityPropertiesProps)
               We split the scope into a client-facing web application where property seekers browse listings, submit general requests, or apply to sell their properties, and a secure admin panel where realtors manage listing cards, schedule viewing requests on an interactive calendar, publish draft blog articles, list career openings, and maintain profile details.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                 <Layout size={20} className="text-amber-400 mb-2" />
                 <h4 className="font-rajdhani font-bold text-white text-sm">Rich Admin Workspace</h4>

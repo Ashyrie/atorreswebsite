@@ -73,7 +73,7 @@ export default function PlugAndDefend({ onClose }: PlugAndDefendProps) {
               Designed and built as a final-year IT capstone project, Plug and Defend solves the challenge of performing security auditing in remote, offline, or low-bandwidth environments. While network scanning, port diagnostics, and packet captures are executed completely offline on the portable hardware, the system utilizes an internet connection to connect to the external AI API for threat intelligence interpretation.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                 <Cpu size={20} className="text-cyan-400 mb-2" />
                 <h4 className="font-rajdhani font-bold text-white text-sm">AI Analysis Core</h4>

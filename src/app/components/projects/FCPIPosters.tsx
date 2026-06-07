@@ -216,7 +216,7 @@ export default function FCPIPosters({ onClose }: FCPIPostersProps) {
               The posters represent a diverse set of cultural dates, ranging from Philippine national holidays like Independence Day and Rizal Day, to Japanese holidays such as Golden Week, Showa Day, Marine Day, and Respect for the Aged Day, alongside global observances like Labor Day, Father's Day, and Christmas.
             </p>
             
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                 <Sparkles size={20} className="text-fuchsia-400 mb-2" />
                 <h4 className="font-rajdhani font-bold text-white text-sm">Brand Consistency</h4>

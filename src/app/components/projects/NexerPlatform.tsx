@@ -177,7 +177,7 @@ export default function NexerPlatform({ onClose }: NexerPlatformProps) {
               Nexer is an on-demand video streaming platform inspired by Netflix that exclusively showcases movies and TV shows produced by Studio Ghibli. Built on a solid foundation of PHP and a MySQL database, it provides Ghibli fans with a personal cinema experience, featuring a virtual cineplex feel with a subscription-based model that users can easily cancel at any time.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                 <Tv size={20} className="text-pink-400 mb-2" />
                 <h4 className="font-rajdhani font-bold text-white text-sm">Media Hub</h4>

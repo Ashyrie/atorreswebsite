@@ -208,7 +208,7 @@ export default function DeltechSystem({ onClose }: DeltechSystemProps) {
               The verifier panel allows administrators to verify tickets using integrated camera modules, filter logs by order numbers and date bounds, download data directly to CSV format, and configure access settings. On the client side, visitors can explore parking equipment directories (such as barrier gates, RFID readers, and surveillance gear), send inquiries, and set up client accounts.
             </p>
             
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                 <Layout size={20} className="text-violet-400 mb-2" />
                 <h4 className="font-rajdhani font-bold text-white text-sm">Verifier Admin Panel</h4>
