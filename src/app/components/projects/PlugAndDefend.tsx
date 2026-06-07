@@ -2,7 +2,7 @@ import { useState } from "react";
 import { X, ArrowRight, Shield, Play, BookOpen, Cpu, Terminal, Download, ChevronRight } from "lucide-react";
 
 import imgHighlight from "@/assets/projects/plug_and_defend/plug_defend_highlight.png";
-import videoDemo from "@/assets/PND INITIAL DEMO.mp4";
+const videoDemo = "/PND INITIAL DEMO.mp4";
 import pdfManual from "@/assets/PLUG-AND-DEFEND-MANUAL.pdf";
 
 interface PlugAndDefendProps {
