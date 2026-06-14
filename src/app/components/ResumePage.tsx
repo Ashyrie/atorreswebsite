@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
-  ArrowRight, Download, Mail, Phone, Globe
+  ArrowRight, Mail, Phone, Globe
 } from "lucide-react";
 import {
   SKILLS, PROJECTS, CERTS, SEMINARS, REFERENCES
@@ -14,6 +14,26 @@ interface ResumePageProps {
 
 export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePageProps) {
   const [cvTab, setCvTab] = useState<"interactive" | "pdf">("interactive");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    if (!isExpanded) return;
+
+    lastScrollY.current = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < lastScrollY.current - 60) {
+        setIsExpanded(false);
+      } else if (currentScrollY > lastScrollY.current) {
+        lastScrollY.current = currentScrollY;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isExpanded]);
 
   return (
     <div
@@ -25,7 +45,7 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
       <nav className="glass-nav py-4 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <button
-            onClick={onClose}
+            onClick={() => (window as any).goToLandingPage ? (window as any).goToLandingPage() : onClose()}
             className="font-mono-dm text-base font-medium select-none flex items-center gap-1 hover:text-cyan-400 transition-colors cursor-pointer"
           >
             <span className="text-cyan-400">{"<"}</span>
@@ -43,14 +63,14 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 pt-24 pb-16 w-full flex-grow flex flex-col">
-        
+
         {/* Header Banner */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-white/[0.06] pb-6 pt-6">
           <div>
             <h1 className="font-rajdhani text-5xl font-bold text-white tracking-tight">AILENE R. TORRES</h1>
             <p className="font-body text-cyan-400 text-base font-medium mt-1">// Information Technology Professional · Cybersecurity & Networks</p>
           </div>
-          
+
           <div className="flex flex-wrap gap-3">
             <div className="flex bg-white/5 p-1 rounded-xl border border-white/10 w-fit">
               <button
@@ -66,33 +86,33 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                 Original PDF Document
               </button>
             </div>
-
-            <a
-              href={resumePdf}
-              download="Ailene_R_Torres_CV.pdf"
-              className="btn-blue font-body text-white text-sm font-semibold px-6 py-2.5 rounded-xl flex items-center gap-2"
-            >
-              <Download size={15} /> Download PDF
-            </a>
           </div>
         </div>
 
         {cvTab === "pdf" ? (
           /* PDF View */
-          <div className="glass rounded-2xl border border-white/5 overflow-hidden flex-grow min-h-[600px] lg:min-h-[750px] flex flex-col relative">
+          <div
+            className="glass rounded-2xl border border-white/5 overflow-hidden flex-grow min-h-[600px] lg:min-h-[750px] flex flex-col relative"
+            onContextMenu={(e) => e.preventDefault()}
+          >
             <iframe
-              src={resumePdf}
+              src={`${resumePdf}#toolbar=0&navpanes=0`}
               title="Ailene R. Torres CV"
               className="w-full h-full flex-grow border-0 min-h-[600px] lg:min-h-[750px]"
+            />
+            {/* Overlay: pointer-events none so scroll still works inside iframe */}
+            <div
+              className="absolute inset-0 z-10"
+              style={{ background: 'transparent', pointerEvents: 'none' }}
             />
           </div>
         ) : (
           /* Interactive Web CV View */
           <div className="grid lg:grid-cols-[320px_1fr] gap-8 items-start">
-            
+
             {/* Left Column: Quick Profile Summary & Meta */}
             <div className="space-y-6 lg:sticky lg:top-24">
-              
+
               {/* Profile Card */}
               <div className="glass rounded-2xl p-6 border border-white/5 space-y-5">
                 <div className="flex items-center gap-4">
@@ -112,7 +132,7 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                     <p className="font-mono-dm text-[10px] text-slate-500 mt-0.5">B.S. IT Graduate</p>
                   </div>
                 </div>
-                
+
                 <p className="font-body text-slate-400 text-xs leading-relaxed border-t border-white/5 pt-4">
                   Recent graduate with a Bachelor’s Degree in Information Technology from the University of Makati, equipped with foundational knowledge in technical support, troubleshooting, networking, and cybersecurity. Demonstrates adaptability, problem-solving skills, and experience working in collaborative team environments through academic and internship-related activities. Eager to apply technical expertise, learn emerging technologies, improve operational efficiency, and provide reliable IT support in fast-paced work environments.
                 </p>
@@ -163,17 +183,17 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
 
             {/* Right Column: Dynamic Scrolling Details */}
             <div className="space-y-6">
-              
+
               {/* Work Experience */}
               <div className="glass rounded-2xl p-6 border border-white/5">
                 <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Internship Experience</h3>
-                
+
                 <div className="relative border-l border-white/10 pl-6 pb-2 ml-2">
                   <div className="absolute w-3 h-3 rounded-full bg-cyan-400 -left-[6.5px] top-1.5 shadow-lg shadow-cyan-400/40" />
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <div>
                       <h4 className="font-rajdhani text-xl font-bold text-white leading-none">Full Stack Web Developer Intern</h4>
-                      <p className="font-body text-slate-400 text-xs mt-1.5 font-medium">Flag City Properties, Inc. · Bacolod City</p>
+                      <p className="font-body text-slate-400 text-xs mt-1.5 font-medium">Flag City Properties, Inc. · One Park Drive, BGC, Taguig</p>
                     </div>
                     <span className="font-mono-dm text-[11px] text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-3 py-1 rounded-md">
                       Feb 2026 – Apr 2026
@@ -224,74 +244,99 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                 </div>
               </div>
 
-              {/* Skills Detail (Categorized) */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Detailed Technical Skills</h3>
-                <div className="space-y-4">
-                  {SKILLS.map(sk => (
-                    <div key={sk.category} className="border-b border-white/5 last:border-b-0 pb-3 last:pb-0">
-                      <h4 className="font-rajdhani font-bold text-white text-sm mb-2">// {sk.category}</h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {sk.items.map(item => (
-                          <span key={item} className="font-mono-dm text-[10px] text-slate-300 bg-white/5 border border-white/[0.05] px-2.5 py-1 rounded-md">
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+              {/* See More Button */}
+              {!isExpanded && (
+                <div className="flex justify-center pt-2">
+                  <button
+                    onClick={() => setIsExpanded(true)}
+                    className="btn-blue btn-shine-effect font-body text-white font-semibold px-8 py-3 rounded-xl flex items-center gap-2.5 text-sm cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 transition-all select-none"
+                  >
+                    See More Details
+                    <ArrowRight className="rotate-90 animate-bounce mt-0.5" size={15} />
+                  </button>
                 </div>
-              </div>
+              )}
 
-              {/* Certifications and Trainings */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Certifications & Trainings</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {CERTS.map(c => (
-                    <div key={c.name} className="bg-white/[0.02] border border-white/5 rounded-xl p-5 flex flex-col justify-between">
-                      <div>
-                        <span className="font-mono-dm text-[10px] text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded w-fit mb-2 block">{c.year}</span>
-                        <h4 className="font-rajdhani font-bold text-white text-sm leading-snug">{c.name}</h4>
-                        <p className="font-body text-slate-400 text-xs mt-1">{c.issuer}</p>
-                      </div>
-                      {c.details && (
-                        <p className="font-mono-dm text-[9px] text-slate-600 mt-3 border-t border-white/5 pt-2">{c.details}</p>
-                      )}
+              {/* Collapsible details content */}
+              {isExpanded && (
+                <div className="space-y-6 animate-fade-in">
+                  {/* Skills Detail (Categorized) */}
+                  <div className="glass rounded-2xl p-6 border border-white/5">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Detailed Technical Skills</h3>
+                    <div className="space-y-4">
+                      {SKILLS.map(sk => (
+                        <div key={sk.category} className="border-b border-white/5 last:border-b-0 pb-3 last:pb-0">
+                          <h4 className="font-rajdhani font-bold text-white text-sm mb-2">// {sk.category}</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {sk.items.map(item => (
+                              <span key={item} className="font-mono-dm text-[10px] text-slate-300 bg-white/5 border border-white/[0.05] px-2.5 py-1 rounded-md">
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* Seminars & Workshops Grid */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Seminars & Workshops Attended</h3>
-                <div className="space-y-3 font-body text-slate-300 text-xs">
-                  {SEMINARS.map((s, idx) => (
-                    <div key={idx} className="flex items-start gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-2.5 rounded-lg border border-white/[0.03] transition-colors">
-                      <span className="font-mono-dm text-[10px] text-slate-500 mt-0.5">{s.year}</span>
-                      <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-                      <p className="leading-relaxed">{s.name}</p>
+                  {/* Certifications and Trainings */}
+                  <div className="glass rounded-2xl p-6 border border-white/5">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Certifications & Trainings</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {CERTS.map(c => (
+                        <div key={c.name} className="bg-white/[0.02] border border-white/5 rounded-xl p-5 flex flex-col justify-between">
+                          <div>
+                            <span className="font-mono-dm text-[10px] text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded w-fit mb-2 block">{c.year}</span>
+                            <h4 className="font-rajdhani font-bold text-white text-sm leading-snug">{c.name}</h4>
+                            <p className="font-body text-slate-400 text-xs mt-1">{c.issuer}</p>
+                          </div>
+                          {c.details && (
+                            <p className="font-mono-dm text-[9px] text-slate-600 mt-3 border-t border-white/5 pt-2">{c.details}</p>
+                          )}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* References Grid */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Character References</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {REFERENCES.map(r => (
-                    <div key={r.name} className="bg-white/[0.02] border border-white/5 rounded-xl p-4">
-                      <h4 className="font-rajdhani font-bold text-white text-base leading-none mb-1.5">{r.name}</h4>
-                      <p className="font-body text-cyan-400 text-xs font-medium">{r.role}</p>
-                      <p className="font-body text-slate-400 text-xs mt-0.5">{r.company}</p>
-                      <a href={`tel:${r.phone}`} className="font-mono-dm text-[11px] text-slate-500 hover:text-cyan-400 mt-3 inline-flex items-center gap-1">
-                        <Phone size={10} /> {r.phone}
-                      </a>
+                  {/* Seminars & Workshops Grid */}
+                  <div className="glass rounded-2xl p-6 border border-white/5">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Seminars & Workshops Attended</h3>
+                    <div className="space-y-3 font-body text-slate-300 text-xs">
+                      {SEMINARS.map((s, idx) => (
+                        <div key={idx} className="flex items-start gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-2.5 rounded-lg border border-white/[0.03] transition-colors">
+                          <span className="font-mono-dm text-[10px] text-slate-500 mt-0.5">{s.year}</span>
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
+                          <p className="leading-relaxed">{s.name}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+
+                  {/* References Grid */}
+                  <div className="glass rounded-2xl p-6 border border-white/5">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Character References</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {REFERENCES.map(r => (
+                        <div key={r.name} className="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+                          <h4 className="font-rajdhani font-bold text-white text-base leading-none mb-1.5">{r.name}</h4>
+                          <p className="font-body text-cyan-400 text-xs font-medium">{r.role}</p>
+                          <p className="font-body text-slate-400 text-xs mt-0.5">{r.company}</p>
+                          <a href={`tel:${r.phone}`} className="font-mono-dm text-[11px] text-slate-500 hover:text-cyan-400 mt-3 inline-flex items-center gap-1">
+                            <Phone size={10} /> {r.phone}
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Collapse Scroll Indicator Alert Hint */}
+                  <div className="flex items-center justify-center py-2 text-slate-500 font-mono-dm text-[11px] gap-2 select-none">
+                    <span className="inline-block animate-bounce rotate-180">↓</span>
+                    Scroll upward to automatically collapse
+                    <span className="inline-block animate-bounce rotate-180">↓</span>
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
 

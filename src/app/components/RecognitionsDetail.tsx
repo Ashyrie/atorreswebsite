@@ -120,6 +120,11 @@ export default function RecognitionsDetail({
   const currentGroup = lightbox !== null ? RECOG_GROUPS[lightbox.groupIdx] : null;
   const currentItem = lightbox !== null ? currentGroup!.items[lightbox.itemIdx] : null;
   const totalInGroup = currentGroup?.items.length ?? 0;
+  
+  // Position blur based on certificate template
+  const blurStyle = lightbox?.groupIdx === 3
+    ? { bottom: "16%", left: "36%", width: "28%", height: "14%" }
+    : { bottom: "6%", left: "37%", width: "26%", height: "12%" };
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -163,7 +168,7 @@ export default function RecognitionsDetail({
       <nav className="glass-nav py-4 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <button
-            onClick={onClose}
+            onClick={() => (window as any).goToLandingPage ? (window as any).goToLandingPage() : onClose()}
             className="font-mono-dm text-base font-medium select-none flex items-center gap-1 hover:text-cyan-400 transition-colors cursor-pointer"
           >
             <span className="text-cyan-400">{"<"}</span>
@@ -241,7 +246,7 @@ export default function RecognitionsDetail({
                       />
 
                       {/* Watermark */}
-                      <div className="absolute inset-0 flex items-end justify-end p-3 pointer-events-none select-none">
+                      <div className="absolute inset-0 flex items-end justify-end p-3 pointer-events-none select-none z-20">
                         <span className="font-mono-dm text-[8px] text-white/20 tracking-widest uppercase" style={{ textShadow: "0 0 4px rgba(0,0,0,0.6)" }}>
                           © Ailene Torres
                         </span>
@@ -312,7 +317,7 @@ export default function RecognitionsDetail({
 
             {/* Image wrapper — protects against save */}
             <div
-              className="relative z-10 select-none"
+              className="relative z-10 select-none inline-block"
               onContextMenu={(e) => e.preventDefault()}
               style={{ userSelect: "none", WebkitUserSelect: "none" }}
             >
@@ -331,8 +336,15 @@ export default function RecognitionsDetail({
                 }}
                 className="max-h-[68vh] max-w-[88vw] lg:max-w-[72vw] object-contain rounded-lg shadow-2xl border border-white/5"
               />
+              
+              {/* Signature Blur Overlay */}
+              <div
+                style={blurStyle}
+                className="absolute rounded-md bg-white/5 backdrop-blur-md border border-white/[0.08] pointer-events-none z-20"
+              />
+
               {/* Lightbox watermark */}
-              <div className="absolute inset-0 flex items-end justify-center pb-3 pointer-events-none select-none">
+              <div className="absolute inset-0 flex items-end justify-center pb-3 pointer-events-none select-none z-30">
                 <span className="font-mono-dm text-[9px] text-white/20 tracking-[0.25em] uppercase" style={{ textShadow: "0 0 6px rgba(0,0,0,0.8)" }}>
                   © Ailene Torres · Portfolio Only
                 </span>

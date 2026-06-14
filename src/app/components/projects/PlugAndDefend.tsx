@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, ArrowRight, Shield, Play, BookOpen, Cpu, Terminal, Download, ChevronRight } from "lucide-react";
+import { X, ArrowRight, Shield, Play, Cpu, Terminal, ChevronRight } from "lucide-react";
 
 import imgHighlight from "@/assets/projects/plug_and_defend/plug_defend_highlight.png";
 const videoDemo = "/PND INITIAL DEMO.mp4";
@@ -29,7 +29,7 @@ export default function PlugAndDefend({ onClose }: PlugAndDefendProps) {
       <nav className="glass-nav py-4 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <button
-            onClick={onClose}
+            onClick={() => (window as any).goToLandingPage ? (window as any).goToLandingPage() : onClose()}
             className="font-mono-dm text-base font-medium select-none flex items-center gap-1 hover:text-cyan-400 transition-colors cursor-pointer"
           >
             <span className="text-cyan-400">{"<"}</span>
@@ -134,24 +134,22 @@ export default function PlugAndDefend({ onClose }: PlugAndDefendProps) {
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <h3 className="font-rajdhani text-2xl font-bold text-white uppercase tracking-wider">// User Manual Viewer</h3>
-              <div className="flex gap-2">
-                <a
-                  href={pdfManual}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl border border-white/10 hover:border-cyan-500/30 bg-[#0a1224]/50 hover:bg-cyan-500/5 text-xs font-semibold font-body text-slate-300 hover:text-cyan-400 transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
-                >
-                  <BookOpen size={13} /> Open Fullscreen
-                </a>
-              </div>
             </div>
 
             {/* PDF Frame Container (Collapsible Landscape-to-Portrait Height) */}
-            <div className={`glass rounded-2xl p-1 border border-white/5 bg-slate-950 overflow-hidden shadow-2xl transition-all duration-500 relative ${isPdfExpanded ? 'h-[780px]' : 'h-[320px]'}`}>
+            <div
+              className={`glass rounded-2xl p-1 border border-white/5 bg-slate-950 overflow-hidden shadow-2xl transition-all duration-500 relative ${isPdfExpanded ? 'h-[780px]' : 'h-[320px]'}`}
+              onContextMenu={(e) => e.preventDefault()}
+            >
               <iframe
-                src={`${pdfManual}#view=FitH`}
+                src={`${pdfManual}#toolbar=0&navpanes=0&view=FitH`}
                 className="w-full h-full rounded-xl border-none"
                 title="Plug & Defend User Manual"
+              />
+              {/* Overlay: pointer-events none so scroll still works inside iframe */}
+              <div
+                className="absolute inset-0 z-10"
+                style={{ background: 'transparent', pointerEvents: 'none' }}
               />
             </div>
 

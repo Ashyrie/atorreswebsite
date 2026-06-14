@@ -1,6 +1,6 @@
 import {
   Wifi, Shield, Code2, Database, Layers, Wrench, Cpu,
-  Globe, Server, Monitor, Award, Trophy, Star, Palette, LucideIcon
+  Globe, Server, Monitor, Award, Trophy, Star, Palette, LucideIcon, BarChart3
 } from "lucide-react";
 
 import imgPlugDefend from "@/assets/projects/plug_and_defend/plug_defend_highlight.png";
@@ -23,13 +23,14 @@ export interface Project {
 }
 
 export const SKILLS = [
-  { category: "Networking", icon: Wifi, grad: "from-blue-500/20 to-cyan-600/10", iconCls: "text-blue-400", hborder: "group-hover:border-blue-400/40", items: ["Network Config", "Subnetting", "Routing & Switching", "TCP/IP Protocols", "DNS/DHCP Admin", "VPN Basics", "Network Troubleshooting", "Cisco Fundamentals"] },
-  { category: "Cybersecurity", icon: Shield, grad: "from-cyan-500/20 to-blue-600/10", iconCls: "text-cyan-400", hborder: "group-hover:border-cyan-500/40", items: ["Cybersecurity Principles", "Secure Coding Practices", "Endpoint Security", "Vulnerability Assessment", "Information Security"] },
-  { category: "Programming & Dev", icon: Code2, grad: "from-violet-500/20 to-purple-600/10", iconCls: "text-violet-400", hborder: "group-hover:border-violet-400/40", items: ["Python", "Java", "C++", "HTML", "CSS", "PHP", "SQL/MySQL", "Web Development"] },
-  { category: "Database Management", icon: Database, grad: "from-emerald-500/20 to-teal-600/10", iconCls: "text-emerald-400", hborder: "group-hover:border-emerald-400/40", items: ["Database Queries", "MySQL Admin", "DBMS", "Web-Based Databases"] },
-  { category: "Web Design & UI/UX", icon: Layers, grad: "from-pink-500/20 to-rose-600/10", iconCls: "text-pink-400", hborder: "group-hover:border-pink-400/40", items: ["Wireframing", "Layout Design", "Web Accessibility", "UX/UI Design", "Responsive Design"] },
-  { category: "Technical Support", icon: Wrench, grad: "from-amber-500/20 to-orange-600/10", iconCls: "text-amber-400", hborder: "group-hover:border-amber-400/40", items: ["Printer Troubleshooting", "Account Assistance", "IT Support Ops", "Hardware Repair", "Software Diagnostics"] },
-  { category: "Tools & Tech", icon: Cpu, grad: "from-sky-500/20 to-blue-600/10", iconCls: "text-sky-400", hborder: "group-hover:border-sky-400/40", items: ["VS Code", "XAMPP", "Laragon", "phpMyAdmin", "VMware", "Figma", "Git", "Cisco Tools"] },
+  { category: "Networking", icon: Wifi, grad: "from-blue-500/20 to-cyan-600/10", iconCls: "text-blue-400", hborder: "group-hover:border-blue-400/40", items: ["Network Config", "Subnetting", "Routing & Switching", "TCP/IP Protocols", "DNS/DHCP Admin", "VPN Basics", "Network Troubleshooting", "Cisco Fundamentals", "Connectivity Diagnostics"] },
+  { category: "Cybersecurity", icon: Shield, grad: "from-cyan-500/20 to-blue-600/10", iconCls: "text-cyan-400", hborder: "group-hover:border-cyan-500/40", items: ["Cybersecurity Principles", "Secure Coding Practices", "Endpoint Security", "Vulnerability Assessment", "Information Security Fundamentals"] },
+  { category: "Programming & Dev", icon: Code2, grad: "from-violet-500/20 to-purple-600/10", iconCls: "text-violet-400", hborder: "group-hover:border-violet-400/40", items: ["Python", "Java", "C++", "HTML", "CSS", "PHP", "SQL/MySQL", "Web Development", "Application Development", "System Integration", "Basic Software Maintenance"] },
+  { category: "Database Management", icon: Database, grad: "from-emerald-500/20 to-teal-600/10", iconCls: "text-emerald-400", hborder: "group-hover:border-emerald-400/40", items: ["Database Queries", "MySQL Admin", "DBMS", "Web-Based Database Systems"] },
+  { category: "Data Analytics & Visualization", icon: BarChart3, grad: "from-teal-500/20 to-emerald-600/10", iconCls: "text-teal-400", hborder: "group-hover:border-teal-400/40", items: ["Microsoft Excel", "Google Sheets", "Basic Statistical Analysis"] },
+  { category: "Web Design & UI/UX", icon: Layers, grad: "from-pink-500/20 to-rose-600/10", iconCls: "text-pink-400", hborder: "group-hover:border-pink-400/40", items: ["Wireframing", "Layout Design", "Web Accessibility Basics", "UX/UI Design Fundamentals", "Responsive Design Principles"] },
+  { category: "Technical Support", icon: Wrench, grad: "from-amber-500/20 to-orange-600/10", iconCls: "text-amber-400", hborder: "group-hover:border-amber-400/40", items: ["Printer Troubleshooting", "User Account Assistance", "IT Support Ops", "Software Troubleshooting", "Hardware Troubleshooting", "Technical Issue Resolution"] },
+  { category: "Tools & Tech", icon: Cpu, grad: "from-sky-500/20 to-blue-600/10", iconCls: "text-sky-400", hborder: "group-hover:border-sky-400/40", items: ["VS Code", "XAMPP", "Laragon", "phpMyAdmin", "Browser Dev Tools", "VMware", "Cisco Tools", "Canva", "Figma", "Antigravity"] },
 ];
 
 export const PROJECTS: Project[] = [
@@ -96,6 +97,8 @@ export const PROJECTS: Project[] = [
 ];
 
 export const CERTS = [
+  { name: "Simplilearn WordPress Course", issuer: "Simplilearn - Introduction to WordPress", year: "2026", cls: "text-pink-400", bg: "from-pink-500/20 to-pink-900/10", hover: "hover:border-pink-500/30" },
+  { name: "Packt WordPress Development", issuer: "Packt / Coursera - Advanced WordPress Techniques", year: "2026", cls: "text-violet-400", bg: "from-violet-500/20 to-violet-900/10", hover: "hover:border-violet-500/30" },
   { name: "Cisco Networking Academy", issuer: "Endpoint Security & Ethical Hacker Course", year: "2026", cls: "text-sky-400", bg: "from-sky-500/20 to-sky-900/10", hover: "hover:border-sky-500/30" },
   { name: "Microsoft Cybersecurity Fundamentals", issuer: "TESDA - Security, Compliance, & Identity", year: "2026", cls: "text-blue-400", bg: "from-blue-500/20 to-blue-900/10", hover: "hover:border-blue-500/30" },
   { name: "Alibaba Cloud Certified Associate", issuer: "Alibaba Cloud Academy - Business User", year: "2025", cls: "text-orange-400", bg: "from-orange-500/20 to-orange-900/10", hover: "hover:border-orange-500/30", details: "ID: IACA09250400203630L" },

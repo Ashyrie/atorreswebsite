@@ -16,6 +16,8 @@ import imgAlibabaCloud3 from "@/assets/certifications/Screenshot 2026-06-06 1734
 import imgAlibabaCloud4 from "@/assets/certifications/Screenshot 2026-06-06 173457.png";
 import imgShepp1 from "@/assets/certifications/Screenshot 2026-06-06 173627.png";
 import imgShepp2 from "@/assets/certifications/Screenshot 2026-06-06 173640.png";
+import imgWordPressIntro from "@/assets/certifications/Screenshot 2026-06-13 193044.png";
+import imgWordPressAdv from "@/assets/certifications/Screenshot 2026-06-13 193055.png";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -41,6 +43,28 @@ interface CertGroup {
 
 const CERT_GROUPS: CertGroup[] = [
   {
+    category: "WordPress Development",
+    year: "2026",
+    accentCls: "text-pink-400",
+    borderCls: "hover:border-pink-500/40 group-hover:border-pink-500/40",
+    bgCls: "from-pink-500/20 to-pink-900/10",
+    dotCls: "bg-pink-400",
+    certs: [
+      {
+        src: imgWordPressIntro,
+        title: "Introduction to WordPress",
+        desc: "Completed the Introduction to WordPress course through Simplilearn, covering blogging basics, theme management, content creation, and WordPress dashboard operations.",
+        date: "JUN 12, 2026",
+      },
+      {
+        src: imgWordPressAdv,
+        title: "Advanced WordPress Development Techniques",
+        desc: "Passed the Advanced WordPress Development Techniques certification by Packt through Coursera, focusing on custom plugin development, theme customization, performance optimization, and advanced database integration.",
+        date: "JUN 12, 2026",
+      },
+    ],
+  },
+  {
     category: "Cisco Networking Academy",
     year: "2026",
     accentCls: "text-sky-400",
@@ -52,13 +76,13 @@ const CERT_GROUPS: CertGroup[] = [
         src: imgCisco2,
         title: "Ethical Hacker",
         desc: "Completed the Ethical Hacker course through Cisco Networking Academy, covering penetration testing techniques, vulnerability assessment, and ethical hacking methodologies.",
-        date: "03 Mar 2026",
+        date: "MAR 03, 2026",
       },
       {
         src: imgCisco1,
         title: "Endpoint Security",
         desc: "Completed the Endpoint Security course through Cisco Networking Academy, covering threat detection, endpoint protection strategies, and security policy enforcement.",
-        date: "26 Mar 2026",
+        date: "MAR 26, 2026",
       },
     ],
   },
@@ -74,51 +98,7 @@ const CERT_GROUPS: CertGroup[] = [
         src: imgTesda,
         title: "Microsoft Cybersecurity Course: Security, Compliance, and Identity Fundamentals",
         desc: "Certificate of Completion issued by TESDA for successfully finishing the Microsoft Cybersecurity course focused on Security, Compliance, and Identity Fundamentals — covering cloud security, compliance frameworks, and identity management.",
-        date: "February 21, 2026",
-      },
-    ],
-  },
-  {
-    category: "QUALYS Certified Specialist",
-    year: "2025",
-    accentCls: "text-emerald-400",
-    borderCls: "hover:border-emerald-500/40 group-hover:border-emerald-500/40",
-    bgCls: "from-emerald-500/20 to-emerald-900/10",
-    dotCls: "bg-emerald-400",
-    certs: [
-      {
-        src: imgQualys1,
-        title: "Endpoint Detection and Response",
-        desc: "Passed the Qualys certification exam for Endpoint Detection and Response, demonstrating ability to deploy and manage Qualys Cloud Platform solutions for endpoint threat detection and incident response.",
-        date: "11/20/2025",
-      },
-      {
-        src: imgQualys2,
-        title: "CyberSecurity Asset Management",
-        desc: "Passed the Qualys certification exam for CyberSecurity Asset Management, covering asset inventory, risk prioritization, and continuous monitoring of IT infrastructure.",
-        date: "11/20/2025",
-      },
-      {
-        src: imgQualys3,
-        title: "PCI Compliance",
-        desc: "Passed the Qualys certification exam for PCI Compliance, demonstrating knowledge of Payment Card Industry standards, compliance scanning, and remediation workflows.",
-        date: "11/20/2025",
-      },
-    ],
-  },
-  {
-    category: "Grandstream Certified Specialist",
-    year: "2025",
-    accentCls: "text-amber-400",
-    borderCls: "hover:border-amber-500/40 group-hover:border-amber-500/40",
-    bgCls: "from-amber-500/20 to-amber-900/10",
-    dotCls: "bg-amber-400",
-    certs: [
-      {
-        src: imgGrandstream,
-        title: "Grandstream Certified Specialist – UC Solution",
-        desc: "Certified as a Grandstream Specialist in Unified Communications (UC) Solution, validating knowledge in VoIP systems, IP PBX configuration, and UC deployment best practices.",
-        date: "March 13, 2025",
+        date: "FEB 21, 2026",
       },
     ],
   },
@@ -135,31 +115,75 @@ const CERT_GROUPS: CertGroup[] = [
         src: imgAlibabaAca,
         title: "Alibaba Cloud Certified Associate – Business User",
         desc: "Official Alibaba Cloud Certified Associate (ACA) credential for Business User, validating understanding of Alibaba Cloud products and services for business operations. Certificate ID: IACA09250400203630L, valid until April 24, 2027.",
-        date: "2025",
+        date: "APR 24, 2025",
       },
       {
         src: imgAlibabaCloud1,
         title: "Cloud Computing Basics",
         desc: "Completed the Alibaba Cloud Academy course on Cloud Computing Basics, covering foundational concepts of cloud architecture, deployment models, and core Alibaba Cloud services.",
-        date: "Feb 28, 2027 (Valid Until)",
+        date: "FEB 28, 2025",
       },
       {
         src: imgAlibabaCloud2,
         title: "Compute on the Cloud",
         desc: "Completed the Alibaba Cloud Academy course on Compute on the Cloud, covering elastic computing, ECS instance management, auto-scaling, and load balancing solutions.",
-        date: "Feb 28, 2027 (Valid Until)",
+        date: "FEB 28, 2025",
       },
       {
         src: imgAlibabaCloud3,
         title: "Data Management on the Cloud",
         desc: "Completed the Alibaba Cloud Academy course on Data Management on the Cloud, covering database services, data storage solutions, and cloud-based data management best practices.",
-        date: "Feb 28, 2027 (Valid Until)",
+        date: "FEB 28, 2025",
       },
       {
         src: imgAlibabaCloud4,
         title: "Networking on the Cloud",
         desc: "Completed the Alibaba Cloud Academy course on Networking on the Cloud, covering Virtual Private Cloud (VPC), routing, network security groups, and cloud connectivity solutions.",
-        date: "Feb 28, 2027 (Valid Until)",
+        date: "FEB 28, 2025",
+      },
+    ],
+  },
+  {
+    category: "QUALYS Certified Specialist",
+    year: "2025",
+    accentCls: "text-emerald-400",
+    borderCls: "hover:border-emerald-500/40 group-hover:border-emerald-500/40",
+    bgCls: "from-emerald-500/20 to-emerald-900/10",
+    dotCls: "bg-emerald-400",
+    certs: [
+      {
+        src: imgQualys1,
+        title: "Endpoint Detection and Response",
+        desc: "Passed the Qualys certification exam for Endpoint Detection and Response, demonstrating ability to deploy and manage Qualys Cloud Platform solutions for endpoint threat detection and incident response.",
+        date: "NOV 20, 2025",
+      },
+      {
+        src: imgQualys2,
+        title: "CyberSecurity Asset Management",
+        desc: "Passed the Qualys certification exam for CyberSecurity Asset Management, covering asset inventory, risk prioritization, and continuous monitoring of IT infrastructure.",
+        date: "NOV 20, 2025",
+      },
+      {
+        src: imgQualys3,
+        title: "PCI Compliance",
+        desc: "Passed the Qualys certification exam for PCI Compliance, demonstrating knowledge of Payment Card Industry standards, compliance scanning, and remediation workflows.",
+        date: "NOV 20, 2025",
+      },
+    ],
+  },
+  {
+    category: "Grandstream Certified Specialist",
+    year: "2025",
+    accentCls: "text-amber-400",
+    borderCls: "hover:border-amber-500/40 group-hover:border-amber-500/40",
+    bgCls: "from-amber-500/20 to-amber-900/10",
+    dotCls: "bg-amber-400",
+    certs: [
+      {
+        src: imgGrandstream,
+        title: "Grandstream Certified Specialist – UC Solution",
+        desc: "Certified as a Grandstream Specialist in Unified Communications (UC) Solution, validating knowledge in VoIP systems, IP PBX configuration, and UC deployment best practices.",
+        date: "MAR 13, 2025",
       },
     ],
   },
@@ -175,13 +199,13 @@ const CERT_GROUPS: CertGroup[] = [
         src: imgShepp1,
         title: "SHE++ Masterclass on Alibaba Cloud System",
         desc: "Certificate of Completion from PhilDev S&T Development Foundation and Alibaba Cloud Philippines for active participation in the SHE++ Masterclass on Alibaba Cloud System — an 8-hour program held at the University of Makati.",
-        date: "February 28, 2025",
+        date: "FEB 28, 2025",
       },
       {
         src: imgShepp2,
         title: "SHE++ Workshop on Leadership and Technopreneurial Mindset",
         desc: "Certificate of Participation from the SHE++ Empowerment Program for Women in Tech, for completing the Workshop on Leadership and Technopreneurial Mindset — an 8-hour session held at the University of Makati.",
-        date: "February 5 & 7, 2025",
+        date: "FEB 05 & 07, 2025",
       },
     ],
   },
@@ -255,7 +279,7 @@ export default function CertificationsDetail({
       <nav className="glass-nav py-4 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <button
-            onClick={onClose}
+            onClick={() => (window as any).goToLandingPage ? (window as any).goToLandingPage() : onClose()}
             className="font-mono-dm text-base font-medium select-none flex items-center gap-1 hover:text-cyan-400 transition-colors cursor-pointer"
           >
             <span className="text-cyan-400">{"<"}</span>

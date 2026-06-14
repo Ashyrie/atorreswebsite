@@ -151,7 +151,7 @@ export default function DeltechSystem({ onClose }: DeltechSystemProps) {
       onContextMenu={(e) => e.preventDefault()}
       style={{ userSelect: "none", WebkitUserSelect: "none" }}
     >
-      
+
       {/* Background Neon Glows */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[10%] left-[20%] w-[450px] h-[450px] rounded-full bg-violet-500/[0.03] blur-[130px]" />
@@ -162,7 +162,7 @@ export default function DeltechSystem({ onClose }: DeltechSystemProps) {
       <nav className="glass-nav py-4 fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <button
-            onClick={onClose}
+            onClick={() => (window as any).goToLandingPage ? (window as any).goToLandingPage() : onClose()}
             className="font-mono-dm text-base font-medium select-none flex items-center gap-1 hover:text-violet-400 transition-colors cursor-pointer"
           >
             <span className="text-cyan-400">{"<"}</span>
@@ -195,19 +195,19 @@ export default function DeltechSystem({ onClose }: DeltechSystemProps) {
 
       {/* Content Section */}
       <div className="max-w-7xl mx-auto px-6 pb-20 w-full grid lg:grid-cols-[1fr_540px] gap-12 z-10 flex-grow">
-        
+
         {/* Left Column: Details */}
         <div className="space-y-8">
-          
+
           <div className="glass rounded-2xl p-8 border border-white/5 space-y-6">
             <h3 className="font-rajdhani text-2xl font-bold text-white uppercase tracking-wider">// Project Overview</h3>
             <p className="font-body text-slate-300 text-sm leading-relaxed">
-              We partnered with <strong>Deltech Parking Systems and Solutions, Inc.</strong> to engineer a web portal that simplifies product transactions and streamlines client-side operations. The project divides functionality into two major components: a customer-facing e-commerce and information website for equipment catalog browsing and account registration, and a secure Verifier Dashboard for parking ticket QR code scans and scan history logs.
+              We partnered with <strong>Deltech Parking Systems and Solutions, Inc.</strong> to design and develop a web portal that simplifies product transactions and streamlines client-side operations. The project divides functionality into two major components: a customer-facing e-commerce and information website for equipment catalog browsing and account registration, and a secure Verifier Dashboard for parking ticket QR code scans and scan history logs.
             </p>
             <p className="font-body text-slate-300 text-sm leading-relaxed">
               The verifier panel allows administrators to verify tickets using integrated camera modules, filter logs by order numbers and date bounds, download data directly to CSV format, and configure access settings. On the client side, visitors can explore parking equipment directories (such as barrier gates, RFID readers, and surveillance gear), send inquiries, and set up client accounts.
             </p>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                 <Layout size={20} className="text-violet-400 mb-2" />
@@ -269,7 +269,7 @@ export default function DeltechSystem({ onClose }: DeltechSystemProps) {
 
         {/* Right Column: Visual Showcases */}
         <div className="space-y-12">
-          
+
           {/* Admin Side Showcase */}
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
@@ -462,7 +462,7 @@ export default function DeltechSystem({ onClose }: DeltechSystemProps) {
 
           {/* Interactive Workspace */}
           <div className="max-w-7xl mx-auto w-full flex-grow grid lg:grid-cols-[1fr_360px] gap-8 items-center py-6 select-none overflow-y-auto">
-            
+
             {/* Visual Screen Display */}
             <div className="relative flex items-center justify-center w-full h-full" onClick={(e) => e.stopPropagation()}>
               <div className="absolute w-[60vw] h-[50vh] rounded-full bg-violet-500/5 blur-[130px] pointer-events-none" />

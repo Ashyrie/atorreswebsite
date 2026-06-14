@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Mail, Phone, ExternalLink, ArrowRight, Github, Linkedin,
   Menu, X, Cpu, Download, Trophy, Layers, Star,
@@ -6,7 +6,7 @@ import {
   Facebook, MessageCircle, Shield, Wifi, Code2, Wrench
 } from "lucide-react";
 import profileImg from "@/assets/profile_professional.png";
-import resumePdf from "@/assets/A. TORRES_CV.pdf";
+import resumePdf from "@/assets/A.TORRES_CV.pdf";
 import { SKILLS, PROJECTS, CERTS, AWARDS } from "./data";
 import ResumePage from "./components/ResumePage";
 import InternshipPhotos from "./components/InternshipPhotos";
@@ -246,11 +246,24 @@ export default function App() {
     ["Aspiring IT Professional", "Full-Stack Web Developer", "Network Engineer", "IT Problem Solver"],
     76, 2300
   );
-
+  const greeting = useMemo(() => { const h = new Date().getHours(); if (h < 12) return "Good Morning"; else if (h < 18) return "Good Afternoon"; else return "Good Evening"; }, []);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
+    (window as any).goToLandingPage = () => {
+      setShowResume(false);
+      setShowPhotos(false);
+      setShowCertDetail(null);
+      setShowRecogDetail(null);
+      setActiveProject(null);
+      setTimeout(() => {
+        document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+      }, 80);
+    };
+    return () => {
+      window.removeEventListener("scroll", fn);
+      delete (window as any).goToLandingPage;
+    };
   }, []);
 
   useEffect(() => {
@@ -327,7 +340,12 @@ export default function App() {
   if (showResume) {
     return (
       <ResumePage
-        onClose={() => setShowResume(false)}
+        onClose={() => {
+          setShowResume(false);
+          setTimeout(() => {
+            document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
         resumePdf={resumePdf}
         profileImg={profileImg}
       />
@@ -337,7 +355,12 @@ export default function App() {
   if (showPhotos) {
     return (
       <InternshipPhotos
-        onClose={() => setShowPhotos(false)}
+        onClose={() => {
+          setShowPhotos(false);
+          setTimeout(() => {
+            document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
       />
     );
   }
@@ -345,7 +368,12 @@ export default function App() {
   if (showCertDetail !== null) {
     return (
       <CertificationsDetail
-        onClose={() => setShowCertDetail(null)}
+        onClose={() => {
+          setShowCertDetail(null);
+          setTimeout(() => {
+            document.getElementById("certifications")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
         initialGroupIdx={showCertDetail}
       />
     );
@@ -354,7 +382,12 @@ export default function App() {
   if (showRecogDetail !== null) {
     return (
       <RecognitionsDetail
-        onClose={() => setShowRecogDetail(null)}
+        onClose={() => {
+          setShowRecogDetail(null);
+          setTimeout(() => {
+            document.getElementById("awards")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
         initialGroupIdx={showRecogDetail}
       />
     );
@@ -363,7 +396,12 @@ export default function App() {
   if (activeProject === "Plug and Defend: A Portable Cybersecurity Toolkit") {
     return (
       <PlugAndDefend
-        onClose={() => setActiveProject(null)}
+        onClose={() => {
+          setActiveProject(null);
+          setTimeout(() => {
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
       />
     );
   }
@@ -371,7 +409,12 @@ export default function App() {
   if (activeProject === "Flag City Properties, Inc. Website") {
     return (
       <FlagCityProperties
-        onClose={() => setActiveProject(null)}
+        onClose={() => {
+          setActiveProject(null);
+          setTimeout(() => {
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
       />
     );
   }
@@ -379,7 +422,12 @@ export default function App() {
   if (activeProject === "FCPI Holiday Observance Posters") {
     return (
       <FCPIPosters
-        onClose={() => setActiveProject(null)}
+        onClose={() => {
+          setActiveProject(null);
+          setTimeout(() => {
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
       />
     );
   }
@@ -387,7 +435,12 @@ export default function App() {
   if (activeProject === "Deltech Integrated Reservation & Client Management System") {
     return (
       <DeltechSystem
-        onClose={() => setActiveProject(null)}
+        onClose={() => {
+          setActiveProject(null);
+          setTimeout(() => {
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
       />
     );
   }
@@ -395,7 +448,12 @@ export default function App() {
   if (activeProject === "Nexer: A Netflix Inspired Streaming Platform") {
     return (
       <NexerPlatform
-        onClose={() => setActiveProject(null)}
+        onClose={() => {
+          setActiveProject(null);
+          setTimeout(() => {
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }, 80);
+        }}
       />
     );
   }
@@ -693,11 +751,14 @@ export default function App() {
       {/* ══════════════════════════════ NAV ══════════════════════════════ */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass-nav py-3" : "py-5 bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <div className="font-mono-dm text-base font-medium select-none">
+          <button
+            onClick={() => scrollTo("hero")}
+            className="font-mono-dm text-base font-medium select-none flex items-center gap-1 hover:text-cyan-400 transition-colors cursor-pointer"
+          >
             <span className="text-cyan-400">{"<"}</span>
             <span className="text-white mx-0.5">AT</span>
             <span className="text-cyan-400">{"/>"}</span>
-          </div>
+          </button>
 
           <div className="hidden md:flex items-center gap-7">
             {navLinks.map(lnk => (
@@ -754,7 +815,7 @@ export default function App() {
           <div className="absolute bottom-[25%] left-[8%] w-6 h-6 border-b border-l border-cyan-500/20 pointer-events-none pf-float3" />
           <div className="absolute top-[30%] right-[12%] w-6 h-6 border-t border-r border-blue-500/20 pointer-events-none pf-float2" />
           <div className="absolute bottom-[15%] right-[22%] w-6 h-6 border-b border-r border-violet-500/20 pointer-events-none pf-float" />
-          
+
           <div className="absolute top-[25%] left-[25%] w-24 h-24 border border-dashed border-white/5 rounded-full pointer-events-none animate-[pulse_4s_ease-in-out_infinite]" />
           <div className="absolute bottom-[30%] right-[30%] w-32 h-32 border border-dashed border-white/5 rounded-full pointer-events-none animate-[pulse_5s_ease-in-out_infinite]" />
 
@@ -771,7 +832,7 @@ export default function App() {
             </div>
 
             <div>
-              <p className="font-mono-dm text-slate-500 text-sm mb-1 select-none">Hello, I am</p>
+              <p className="font-mono-dm text-slate-500 text-sm mb-1 select-none">{greeting}, I am</p>
               <h1 className="font-rajdhani font-bold leading-none tracking-tight text-white glow-text cursor-default select-none" style={{ fontSize: "clamp(3rem,8vw,5.5rem)" }}>
                 <GlitchText text="Ailene Torres" />
               </h1>
@@ -856,7 +917,7 @@ export default function App() {
                   <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_8px_#06b6d4] animate-[scan-line_4s_linear_infinite] pointer-events-none z-20" />
                   {/* Grid overlay for holographic look */}
                   <div className="absolute inset-0 bg-[radial-gradient(rgba(6,182,212,0.08)_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none z-20 opacity-30 mix-blend-overlay" />
-                  
+
                   <img
                     src={profileImg}
                     alt="Ailene Torres"
@@ -891,7 +952,7 @@ export default function App() {
           <SectionHeader label="01. about" title="About Me" />
 
           <div className="grid lg:grid-cols-[1fr_280px] gap-14 mt-16 items-start">
-            
+
             {/* Hacker Dossier Glass Card */}
             <div className="group/dossier relative rounded-2xl p-[1.5px] overflow-hidden transition-all duration-500 hover:scale-[1.01] hover-neon-sec flex-grow">
               {/* Spinning Neon Border Gradient (Visible on hover) */}
@@ -908,7 +969,7 @@ export default function App() {
               <div className="relative p-6 md:p-8 bg-[#0b1326]/95 backdrop-blur-xl rounded-[15px] border border-white/5 group-hover/dossier:border-transparent transition-colors duration-500 overflow-hidden space-y-6 qr-shine-effect h-full flex flex-col justify-between">
                 {/* Card dot grid background */}
                 <div className="absolute inset-0 card-grid-dots opacity-5 group-hover/dossier:opacity-12 transition-opacity duration-500 pointer-events-none" />
-                
+
                 {/* Dossier status label in corner */}
                 <div className="absolute top-3 right-4 font-mono-dm text-[8.5px] text-slate-500/75 select-none tracking-widest uppercase z-10">
                   DOC.REF // BSIT.AT_2026
@@ -959,7 +1020,7 @@ export default function App() {
             <div className="grid grid-cols-2 gap-3.5">
               {[
                 { label: "Projects", value: "5", icon: Layers, color1: "#06b6d4", color2: "#3b82f6", glow: "rgba(6,182,212,0.15)", neonClass: "hover-neon-sec" },
-                { label: "Certifications", value: "12+", icon: Award, color1: "#f59e0b", color2: "#fbbf24", glow: "rgba(245,158,11,0.15)", neonClass: "hover-neon-sup" },
+                { label: "Certifications", value: "14+", icon: Award, color1: "#f59e0b", color2: "#fbbf24", glow: "rgba(245,158,11,0.15)", neonClass: "hover-neon-sup" },
                 { label: "Technologies", value: "25+", icon: Cpu, color1: "#8b5cf6", color2: "#d946ef", glow: "rgba(139,92,246,0.15)", neonClass: "hover-neon-dev" },
                 { label: "IT Education", value: "4 Yrs", icon: Star, color1: "#10b981", color2: "#14b8a6", glow: "rgba(16,185,129,0.15)", neonClass: "hover-neon-db" },
               ].map(s => (
@@ -981,7 +1042,7 @@ export default function App() {
                   <div className="relative bg-[#0b1326]/95 backdrop-blur-xl rounded-[11px] p-5 text-center z-10 border border-white/5 group-hover:border-transparent transition-colors duration-500 overflow-hidden h-full flex flex-col justify-center">
                     {/* Grid dots background overlay */}
                     <div className="absolute inset-0 card-grid-dots opacity-5 group-hover:opacity-12 transition-opacity duration-500 pointer-events-none rounded-xl" />
-                    
+
                     {/* Glowing radial ambient background */}
                     <div
                       className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl pointer-events-none"
@@ -1158,7 +1219,7 @@ export default function App() {
               <div className="w-3 h-3 rounded-full bg-cyan-400/20 border border-cyan-400 flex items-center justify-center relative z-10 shadow-[0_0_8px_rgba(6,182,212,0.4)]">
                 <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
               </div>
-              
+
               {/* Vertical SVG Pipeline with flowing data pulse */}
               <svg className="w-6 h-full min-h-[260px] absolute top-3 bottom-0 left-1/2 -translate-x-1/2" viewBox="0 0 24 300" preserveAspectRatio="none">
                 <line x1="12" y1="0" x2="12" y2="300" stroke="rgba(6, 182, 212, 0.15)" strokeWidth="2" strokeDasharray="4 4" />
@@ -1357,12 +1418,14 @@ export default function App() {
                   key={cert.name}
                   onClick={() => {
                     const groupIdx = {
-                      "Cisco Networking Academy": 0,
-                      "Microsoft Cybersecurity Fundamentals": 1,
-                      "QUALYS Certified Specialist": 2,
-                      "Grandstream Certified Specialist": 3,
-                      "Alibaba Cloud Certified Associate": 4,
-                      "Alibaba Cloud Systems Masterclass": 5,
+                      "Simplilearn WordPress Course": 0,
+                      "Packt WordPress Development": 0,
+                      "Cisco Networking Academy": 1,
+                      "Microsoft Cybersecurity Fundamentals": 2,
+                      "Alibaba Cloud Certified Associate": 3,
+                      "QUALYS Certified Specialist": 4,
+                      "Grandstream Certified Specialist": 5,
+                      "Alibaba Cloud Systems Masterclass": 6,
                     }[cert.name] ?? 0;
                     setShowCertDetail(groupIdx);
                     window.scrollTo(0, 0);
@@ -1658,7 +1721,7 @@ export default function App() {
             <span className="text-cyan-400">{"/>"}</span>
           </div>
           <p className="font-mono-dm text-[10px] text-slate-700 text-center">
-            © 2026 Ailene Torres · IT Professional · Cybersecurity · Full-Stack Dev
+            © 2026 Ailene Torres · Aspiring IT Professional · Cybersecurity · Full-Stack Dev
           </p>
           <div className="flex items-center gap-4">
             <a href="https://github.com/Ashyrie" target="_blank" rel="noopener noreferrer" className="text-slate-700 hover:text-white transition-colors"><Github size={15} /></a>

@@ -6,3 +6,6 @@ dist/
 .DS_Store
 .vscode/
 .idea/
+scratch/
+src/assets/originals/
+src/assets/certifications_backup/
