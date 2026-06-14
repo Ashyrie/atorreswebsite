@@ -105,7 +105,7 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
             onContextMenu={(e) => e.preventDefault()}
           >
             <iframe
-              src={`${resumePdf}#toolbar=0&navpanes=0`}
+              src={resumePdf}
               title="Ailene R. Torres CV"
               className="w-full h-full flex-grow border-0 min-h-[600px] lg:min-h-[750px]"
             />
