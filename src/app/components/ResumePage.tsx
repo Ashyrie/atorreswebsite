@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  ArrowRight, Mail, Phone, Globe, Download
+  ArrowRight, Mail, Phone, Globe, Download,
+  User, BookOpen, Briefcase, FolderGit2, Cpu, Award, Mic2, Users
 } from "lucide-react";
 import {
   SKILLS, PROJECTS, CERTS, SEMINARS, REFERENCES
@@ -12,28 +13,53 @@ interface ResumePageProps {
   profileImg: string;
 }
 
+const NAV_SECTIONS = [
+  { id: "section-profile",       label: "Profile",        icon: User },
+  { id: "section-education",     label: "Education",      icon: BookOpen },
+  { id: "section-experience",    label: "Experience",     icon: Briefcase },
+  { id: "section-projects",      label: "Projects",       icon: FolderGit2 },
+  { id: "section-skills",        label: "Skills",         icon: Cpu },
+  { id: "section-certs",         label: "Certifications", icon: Award },
+  { id: "section-seminars",      label: "Seminars",       icon: Mic2 },
+  { id: "section-references",    label: "References",     icon: Users },
+];
+
 export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePageProps) {
   const [cvTab, setCvTab] = useState<"interactive" | "pdf">("interactive");
-  const [isExpanded, setIsExpanded] = useState(false);
-  const lastScrollY = useRef(0);
+  const [activeSection, setActiveSection] = useState("section-profile");
+  const [navOpen, setNavOpen] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Observe which section is in view
   useEffect(() => {
-    if (!isExpanded) return;
+    if (cvTab !== "interactive") return;
 
-    lastScrollY.current = window.scrollY;
+    const observers: IntersectionObserver[] = [];
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < lastScrollY.current - 60) {
-        setIsExpanded(false);
-      } else if (currentScrollY > lastScrollY.current) {
-        lastScrollY.current = currentScrollY;
-      }
-    };
+    NAV_SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isExpanded]);
+    return () => observers.forEach(o => o.disconnect());
+  }, [cvTab]);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = 96; // navbar height
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+    setNavOpen(false);
+  };
 
   return (
     <div
@@ -68,7 +94,7 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-white/[0.06] pb-6 pt-6">
           <div>
             <h1 className="font-rajdhani text-5xl font-bold text-white tracking-tight">AILENE R. TORRES</h1>
-            <p className="font-body text-cyan-400 text-base font-medium mt-1">// Information Technology Professional · Cybersecurity & Networks</p>
+            <p className="font-body text-cyan-400 text-base font-medium mt-1">// Information Technology Professional · Cybersecurity &amp; Networks</p>
           </div>
 
           <div className="flex flex-wrap gap-3 items-center">
@@ -109,7 +135,6 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
               title="Ailene R. Torres CV"
               className="w-full h-full flex-grow border-0 min-h-[600px] lg:min-h-[750px]"
             />
-            {/* Overlay: pointer-events none so scroll still works inside iframe */}
             <div
               className="absolute inset-0 z-10"
               style={{ background: 'transparent', pointerEvents: 'none' }}
@@ -117,161 +142,216 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
           </div>
         ) : (
           /* Interactive Web CV View */
-          <div className="grid lg:grid-cols-[320px_1fr] gap-8 items-start">
+          <div className="flex gap-6 items-start relative">
 
-            {/* Left Column: Quick Profile Summary & Meta */}
-            <div className="space-y-6 lg:sticky lg:top-24">
-
-              {/* Profile Card */}
-              <div className="glass rounded-2xl p-6 border border-white/5 space-y-5">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0f2347] to-[#07132a] border border-cyan-500/30 overflow-hidden relative flex-shrink-0">
-                    <img
-                      src={profileImg}
-                      alt="Ailene R. Torres"
-                      draggable={false}
-                      onContextMenu={(e) => e.preventDefault()}
-                      onDragStart={(e) => e.preventDefault()}
-                      style={{ pointerEvents: "none" }}
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-rajdhani font-bold text-white text-lg">Ailene R. Torres</h4>
-                    <p className="font-mono-dm text-[10px] text-slate-500 mt-0.5">B.S. IT Graduate</p>
-                  </div>
-                </div>
-
-                <p className="font-body text-slate-400 text-xs leading-relaxed border-t border-white/5 pt-4">
-                  Recent graduate with a Bachelor’s Degree in Information Technology from the University of Makati, equipped with foundational knowledge in technical support, troubleshooting, networking, and cybersecurity. Demonstrates adaptability, problem-solving skills, and experience working in collaborative team environments through academic and internship-related activities. Eager to apply technical expertise, learn emerging technologies, improve operational efficiency, and provide reliable IT support in fast-paced work environments.
+            {/* ── Sticky Side Navigation ── */}
+            <aside className="hidden lg:flex flex-col gap-1 sticky top-24 w-52 flex-shrink-0 z-30">
+              <div className="glass rounded-2xl border border-white/10 p-3 shadow-xl shadow-black/30">
+                <p className="font-mono-dm text-[9px] text-slate-500 uppercase tracking-widest px-3 py-2 mb-1">
+                  // Navigate Sections
                 </p>
-
-                <div className="border-t border-white/5 pt-4 space-y-3">
-                  <div className="flex items-start gap-3">
-                    <Mail size={13} className="text-cyan-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-mono-dm text-[9px] text-slate-600 uppercase tracking-widest block">Email</span>
-                      <a href="mailto:torresailene25@gmail.com" className="font-body text-xs text-slate-300 hover:text-cyan-400">torresailene25@gmail.com</a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Phone size={13} className="text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-mono-dm text-[9px] text-slate-600 uppercase tracking-widest block">Phone</span>
-                      <a href="tel:+639559880972" className="font-body text-xs text-slate-300 hover:text-emerald-400">09559880972</a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Globe size={13} className="text-violet-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-mono-dm text-[9px] text-slate-600 uppercase tracking-widest block">Address</span>
-                      <span className="font-body text-xs text-slate-300">Malate, Manila City, 1004</span>
-                    </div>
-                  </div>
-                </div>
+                {NAV_SECTIONS.map(({ id, label, icon: Icon }) => (
+                  <button
+                    key={id}
+                    onClick={() => scrollToSection(id)}
+                    className={`
+                      w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left
+                      font-body text-xs font-medium transition-all duration-200 cursor-pointer group
+                      ${activeSection === id
+                        ? "bg-cyan-500/15 text-cyan-400 border border-cyan-500/25 shadow-sm"
+                        : "text-slate-400 hover:text-white hover:bg-white/5 border border-transparent"
+                      }
+                    `}
+                  >
+                    <Icon
+                      size={14}
+                      className={`flex-shrink-0 transition-colors ${activeSection === id ? "text-cyan-400" : "text-slate-600 group-hover:text-slate-300"}`}
+                    />
+                    {label}
+                    {activeSection === id && (
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/60 animate-pulse" />
+                    )}
+                  </button>
+                ))}
               </div>
+            </aside>
 
-              {/* Education Card */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-base text-cyan-400 mb-4 tracking-wider uppercase">// Education</h3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="font-body text-xs text-slate-500 font-mono-dm uppercase tracking-wider mb-1">2022 – 2026</p>
-                    <h4 className="font-rajdhani font-bold text-white text-sm">University of Makati</h4>
-                    <p className="font-body text-xs text-slate-400 leading-snug">Bachelor of Science in Information Technology</p>
-                    <p className="font-body text-[10px] text-cyan-400/80 mt-1">Information & Network Security Track</p>
-                  </div>
-                  <div className="border-t border-white/5 pt-3">
-                    <p className="font-body text-xs text-slate-500 font-mono-dm uppercase tracking-wider mb-1">2020 – 2022</p>
-                    <h4 className="font-rajdhani font-bold text-white text-sm">Maximo Estrella Senior High School</h4>
-                    <p className="font-body text-xs text-slate-400">STEM Strand Graduate</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* ── Mobile Floating Nav Toggle ── */}
+            <div className="lg:hidden fixed bottom-6 right-6 z-50">
+              <button
+                onClick={() => setNavOpen(!navOpen)}
+                className="w-12 h-12 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/40 flex items-center justify-center text-white hover:bg-cyan-600 active:scale-95 transition-all cursor-pointer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+              </button>
 
-            {/* Right Column: Dynamic Scrolling Details */}
-            <div className="space-y-6">
-
-              {/* Work Experience */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Internship Experience</h3>
-
-                <div className="relative border-l border-white/10 pl-6 pb-2 ml-2">
-                  <div className="absolute w-3 h-3 rounded-full bg-cyan-400 -left-[6.5px] top-1.5 shadow-lg shadow-cyan-400/40" />
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <div>
-                      <h4 className="font-rajdhani text-xl font-bold text-white leading-none">Full Stack Web Developer Intern</h4>
-                      <p className="font-body text-slate-400 text-xs mt-1.5 font-medium">Flag City Properties, Inc. · One Park Drive, BGC, Taguig</p>
-                    </div>
-                    <span className="font-mono-dm text-[11px] text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-3 py-1 rounded-md">
-                      Feb 2026 – Apr 2026
-                    </span>
-                  </div>
-                  <ul className="space-y-2.5 font-body text-slate-300 text-xs leading-relaxed">
-                    <li className="flex items-start gap-2.5">
-                      <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-                      Assisted in front-end and back-end website development and functionality enhancement.
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-                      Provided staff technical support, including account management, printer troubleshooting, software diagnostics, and Microsoft Office assistance.
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-                      Handled and encoded sensitive information with accuracy and confidentiality.
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-                      Designed promotional and informational materials using Canva.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Projects Grid */}
-              <div className="glass rounded-2xl p-6 border border-white/5">
-                <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Key Projects</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {PROJECTS.map(proj => (
-                    <div key={proj.title} className="bg-white/[0.02] border border-white/5 rounded-xl p-5 hover:border-cyan-500/20 transition-all">
-                      <div className="flex items-center justify-between gap-2 mb-1.5">
-                        <span className="font-mono-dm text-[9px] text-slate-500 block uppercase tracking-widest">{proj.subtitle}</span>
-                        <span className="font-mono-dm text-[9px] text-cyan-400/80 bg-cyan-400/5 px-2 py-0.5 rounded border border-cyan-400/10">{proj.date}</span>
-                      </div>
-                      <h4 className="font-rajdhani font-bold text-white text-base leading-snug mb-2">{proj.title}</h4>
-                      <p className="font-body text-slate-400 text-xs leading-relaxed mb-4">{proj.desc}</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {proj.tech.map(t => (
-                          <span key={t} className="font-mono-dm text-[9px] text-slate-500 bg-white/5 px-2 py-0.5 rounded">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+              {navOpen && (
+                <div className="absolute bottom-14 right-0 w-56 glass rounded-2xl border border-white/10 p-3 shadow-xl shadow-black/40 animate-fade-in">
+                  <p className="font-mono-dm text-[9px] text-slate-500 uppercase tracking-widest px-3 py-2 mb-1">// Navigate</p>
+                  {NAV_SECTIONS.map(({ id, label, icon: Icon }) => (
+                    <button
+                      key={id}
+                      onClick={() => scrollToSection(id)}
+                      className={`
+                        w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left
+                        font-body text-xs font-medium transition-all duration-200 cursor-pointer group
+                        ${activeSection === id
+                          ? "bg-cyan-500/15 text-cyan-400 border border-cyan-500/25"
+                          : "text-slate-400 hover:text-white hover:bg-white/5 border border-transparent"
+                        }
+                      `}
+                    >
+                      <Icon size={14} className={`flex-shrink-0 ${activeSection === id ? "text-cyan-400" : "text-slate-600"}`} />
+                      {label}
+                      {activeSection === id && (
+                        <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      )}
+                    </button>
                   ))}
                 </div>
-              </div>
-
-              {/* See More Button */}
-              {!isExpanded && (
-                <div className="flex justify-center pt-2">
-                  <button
-                    onClick={() => setIsExpanded(true)}
-                    className="btn-blue btn-shine-effect font-body text-white font-semibold px-8 py-3 rounded-xl flex items-center gap-2.5 text-sm cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95 transition-all select-none"
-                  >
-                    See More Details
-                    <ArrowRight className="rotate-90 animate-bounce mt-0.5" size={15} />
-                  </button>
-                </div>
               )}
+            </div>
 
-              {/* Collapsible details content */}
-              {isExpanded && (
-                <div className="space-y-6 animate-fade-in">
-                  {/* Skills Detail (Categorized) */}
-                  <div className="glass rounded-2xl p-6 border border-white/5">
-                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Detailed Technical Skills</h3>
+            {/* ── Main Content Columns ── */}
+            <div className="flex-1 min-w-0">
+              <div className="grid lg:grid-cols-[300px_1fr] gap-6 items-start">
+
+                {/* Left Column */}
+                <div className="space-y-6 lg:sticky lg:top-24">
+
+                  {/* Profile Card */}
+                  <div id="section-profile" className="glass rounded-2xl p-6 border border-white/5 space-y-5 scroll-mt-28">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0f2347] to-[#07132a] border border-cyan-500/30 overflow-hidden relative flex-shrink-0">
+                        <img
+                          src={profileImg}
+                          alt="Ailene R. Torres"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                          onDragStart={(e) => e.preventDefault()}
+                          style={{ pointerEvents: "none" }}
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-rajdhani font-bold text-white text-lg">Ailene R. Torres</h4>
+                        <p className="font-mono-dm text-[10px] text-slate-500 mt-0.5">B.S. IT Graduate</p>
+                      </div>
+                    </div>
+
+                    <p className="font-body text-slate-400 text-xs leading-relaxed border-t border-white/5 pt-4">
+                      Recent graduate with a Bachelor's Degree in Information Technology from the University of Makati, equipped with foundational knowledge in technical support, troubleshooting, networking, and cybersecurity. Demonstrates adaptability, problem-solving skills, and experience working in collaborative team environments through academic and internship-related activities. Eager to apply technical expertise, learn emerging technologies, improve operational efficiency, and provide reliable IT support in fast-paced work environments.
+                    </p>
+
+                    <div className="border-t border-white/5 pt-4 space-y-3">
+                      <div className="flex items-start gap-3">
+                        <Mail size={13} className="text-cyan-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-mono-dm text-[9px] text-slate-600 uppercase tracking-widest block">Email</span>
+                          <a href="mailto:torresailene25@gmail.com" className="font-body text-xs text-slate-300 hover:text-cyan-400">torresailene25@gmail.com</a>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Phone size={13} className="text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-mono-dm text-[9px] text-slate-600 uppercase tracking-widest block">Phone</span>
+                          <a href="tel:+639559880972" className="font-body text-xs text-slate-300 hover:text-emerald-400">09559880972</a>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Globe size={13} className="text-violet-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-mono-dm text-[9px] text-slate-600 uppercase tracking-widest block">Address</span>
+                          <span className="font-body text-xs text-slate-300">Malate, Manila City, 1004</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Education Card */}
+                  <div id="section-education" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
+                    <h3 className="font-rajdhani font-bold text-base text-cyan-400 mb-4 tracking-wider uppercase">// Education</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="font-body text-xs text-slate-500 font-mono-dm uppercase tracking-wider mb-1">2022 – 2026</p>
+                        <h4 className="font-rajdhani font-bold text-white text-sm">University of Makati</h4>
+                        <p className="font-body text-xs text-slate-400 leading-snug">Bachelor of Science in Information Technology</p>
+                        <p className="font-body text-[10px] text-cyan-400/80 mt-1">Information &amp; Network Security Track</p>
+                      </div>
+                      <div className="border-t border-white/5 pt-3">
+                        <p className="font-body text-xs text-slate-500 font-mono-dm uppercase tracking-wider mb-1">2020 – 2022</p>
+                        <h4 className="font-rajdhani font-bold text-white text-sm">Maximo Estrella Senior High School</h4>
+                        <p className="font-body text-xs text-slate-400">STEM Strand Graduate</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+
+                  {/* Work Experience */}
+                  <div id="section-experience" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Internship Experience</h3>
+                    <div className="relative border-l border-white/10 pl-6 pb-2 ml-2">
+                      <div className="absolute w-3 h-3 rounded-full bg-cyan-400 -left-[6.5px] top-1.5 shadow-lg shadow-cyan-400/40" />
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div>
+                          <h4 className="font-rajdhani text-xl font-bold text-white leading-none">Full Stack Web Developer Intern</h4>
+                          <p className="font-body text-slate-400 text-xs mt-1.5 font-medium">Flag City Properties, Inc. · One Park Drive, BGC, Taguig</p>
+                        </div>
+                        <span className="font-mono-dm text-[11px] text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 px-3 py-1 rounded-md">
+                          Feb 2026 – Apr 2026
+                        </span>
+                      </div>
+                      <ul className="space-y-2.5 font-body text-slate-300 text-xs leading-relaxed">
+                        <li className="flex items-start gap-2.5">
+                          <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
+                          Assisted in front-end and back-end website development and functionality enhancement.
+                        </li>
+                        <li className="flex items-start gap-2.5">
+                          <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
+                          Provided staff technical support, including account management, printer troubleshooting, software diagnostics, and Microsoft Office assistance.
+                        </li>
+                        <li className="flex items-start gap-2.5">
+                          <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
+                          Handled and encoded sensitive information with accuracy and confidentiality.
+                        </li>
+                        <li className="flex items-start gap-2.5">
+                          <div className="w-1 h-1 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
+                          Designed promotional and informational materials using Canva.
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Projects Grid */}
+                  <div id="section-projects" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Key Projects</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {PROJECTS.map(proj => (
+                        <div key={proj.title} className="bg-white/[0.02] border border-white/5 rounded-xl p-5 hover:border-cyan-500/20 transition-all">
+                          <div className="flex items-center justify-between gap-2 mb-1.5">
+                            <span className="font-mono-dm text-[9px] text-slate-500 block uppercase tracking-widest">{proj.subtitle}</span>
+                            <span className="font-mono-dm text-[9px] text-cyan-400/80 bg-cyan-400/5 px-2 py-0.5 rounded border border-cyan-400/10">{proj.date}</span>
+                          </div>
+                          <h4 className="font-rajdhani font-bold text-white text-base leading-snug mb-2">{proj.title}</h4>
+                          <p className="font-body text-slate-400 text-xs leading-relaxed mb-4">{proj.desc}</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {proj.tech.map(t => (
+                              <span key={t} className="font-mono-dm text-[9px] text-slate-500 bg-white/5 px-2 py-0.5 rounded">{t}</span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Skills */}
+                  <div id="section-skills" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Technical Skills</h3>
                     <div className="space-y-4">
                       {SKILLS.map(sk => (
                         <div key={sk.category} className="border-b border-white/5 last:border-b-0 pb-3 last:pb-0">
@@ -288,9 +368,9 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                     </div>
                   </div>
 
-                  {/* Certifications and Trainings */}
-                  <div className="glass rounded-2xl p-6 border border-white/5">
-                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Certifications & Trainings</h3>
+                  {/* Certifications */}
+                  <div id="section-certs" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Certifications &amp; Trainings</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       {CERTS.map(c => (
                         <div key={c.name} className="bg-white/[0.02] border border-white/5 rounded-xl p-5 flex flex-col justify-between">
@@ -307,9 +387,9 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                     </div>
                   </div>
 
-                  {/* Seminars & Workshops Grid */}
-                  <div className="glass rounded-2xl p-6 border border-white/5">
-                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Seminars & Workshops Attended</h3>
+                  {/* Seminars */}
+                  <div id="section-seminars" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
+                    <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Seminars &amp; Workshops Attended</h3>
                     <div className="space-y-3 font-body text-slate-300 text-xs">
                       {SEMINARS.map((s, idx) => (
                         <div key={idx} className="flex items-start gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-2.5 rounded-lg border border-white/[0.03] transition-colors">
@@ -321,8 +401,8 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                     </div>
                   </div>
 
-                  {/* References Grid */}
-                  <div className="glass rounded-2xl p-6 border border-white/5">
+                  {/* References */}
+                  <div id="section-references" className="glass rounded-2xl p-6 border border-white/5 scroll-mt-28">
                     <h3 className="font-rajdhani font-bold text-lg text-cyan-400 mb-6 tracking-wider uppercase">// Character References</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       {REFERENCES.map(r => (
@@ -338,15 +418,8 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                     </div>
                   </div>
 
-                  {/* Collapse Scroll Indicator Alert Hint */}
-                  <div className="flex items-center justify-center py-2 text-slate-500 font-mono-dm text-[11px] gap-2 select-none">
-                    <span className="inline-block animate-bounce rotate-180">↓</span>
-                    Scroll upward to automatically collapse
-                    <span className="inline-block animate-bounce rotate-180">↓</span>
-                  </div>
                 </div>
-              )}
-
+              </div>
             </div>
 
           </div>
