@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  ArrowRight, Mail, Phone, Globe
+  ArrowRight, Mail, Phone, Globe, Download
 } from "lucide-react";
 import {
   SKILLS, PROJECTS, CERTS, SEMINARS, REFERENCES
@@ -71,7 +71,7 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
             <p className="font-body text-cyan-400 text-base font-medium mt-1">// Information Technology Professional · Cybersecurity & Networks</p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 items-center">
             <div className="flex bg-white/5 p-1 rounded-xl border border-white/10 w-fit">
               <button
                 onClick={() => setCvTab("interactive")}
@@ -86,6 +86,15 @@ export default function ResumePage({ onClose, resumePdf, profileImg }: ResumePag
                 Original PDF Document
               </button>
             </div>
+
+            <a
+              href={resumePdf}
+              download="A.TORRES_CV.pdf"
+              className="bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyan-500/20 active:scale-95 select-none"
+            >
+              <Download size={15} />
+              Download CV
+            </a>
           </div>
         </div>
 
