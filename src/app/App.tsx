@@ -5,6 +5,7 @@ import {
   Award, ChevronRight, CheckCircle, Globe, Camera, Eye,
   Facebook, MessageCircle, Shield, Wifi, Code2, Wrench
 } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import profileImg from "@/assets/profile_professional.png";
 import resumePdf from "@/assets/A.TORRES_CV.pdf";
 import { SKILLS, PROJECTS, CERTS, AWARDS } from "./data";
@@ -1731,6 +1732,7 @@ export default function App() {
         </div>
       </footer>
 
+      <Analytics />
     </div>
   );
 }
